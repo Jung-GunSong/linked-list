@@ -27,17 +27,16 @@ class LinkedList {
 
     if (this.head === null) this.head = newNode;
 
-    if(this.tail !== null) this.tail.next = newNode;
+    if (this.tail !== null) this.tail.next = newNode;
 
     this.tail = newNode;
 
-    this.length ++;
+    this.length++;
   }
 
   /** unshift(val): add new value to start of list. */
 
   unshift(val) {
-
     let newNode = new Node(val);
 
     if (this.tail === null) this.tail = newNode;
@@ -46,63 +45,91 @@ class LinkedList {
 
     this.head = newNode;
 
+    this.length++;
   }
 
   /** pop(): return & remove last item. */
-
   pop() {
-
     if (this.tail === null) return -1;
 
     let current = this.head;
 
-    while (current !== null){
-      if (current.next === this.tail){
+    while (current !== null) {
+      //If we have found tail, with 2 or more items in linked list
+      if (current.next === this.tail) {
         const prevTail = this.tail;
         this.tail = current;
         current.next = null;
-        return prevTail;
+        this.length--;
+        return prevTail.val;
       }
-      current = current.next
-    }
 
+      //If we have found tail, and tail is also head (only item in list)
+      if (current.next === null) {
+        const prevTail = this.tail;
+        this.tail = null;
+        this.head = null;
+        this.length--;
+        return prevTail.val;
+      }
+
+      current = current.next;
+    }
   }
 
   /** shift(): return & remove first item. */
 
   shift() {
+    if (this.head === null) return -1;
 
+    const nextItem = this.head.next;
+    const prevHead = this.head;
+
+    if (nextItem !== null) {
+      this.head = nextItem;
+    } else {
+      this.head = null;
+      this.tail = null;
+    }
+
+    this.length--;
+    return prevHead.val;
   }
 
   /** getAt(idx): get val at idx. */
 
   getAt(idx) {
+    if (idx > this.length - 1 || idx < 0) throw new Error("invalid index.");
 
+    let current = this.head;
+    let counter = 0;
+
+    while (current !== null) {
+      if (counter === idx) {
+        return current.val;
+      }
+      78;
+
+      current = current.next;
+      counter++;
+    }
   }
 
   /** setAt(idx, val): set val at idx to val */
 
-  setAt(idx, val) {
-
-  }
+  setAt(idx, val) {}
 
   /** insertAt(idx, val): add node w/val before idx. */
 
-  insertAt(idx, val) {
-
-  }
+  insertAt(idx, val) {}
 
   /** removeAt(idx): return & remove item at idx, */
 
-  removeAt(idx) {
-
-  }
+  removeAt(idx) {}
 
   /** average(): return an average of all values in the list */
 
-  average() {
-
-  }
+  average() {}
 }
 
 module.exports = LinkedList;
